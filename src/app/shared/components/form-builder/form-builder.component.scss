@@ -1,0 +1,7 @@
+.mat-raised-button:not([class*=mat-elevation-z]) {
+    margin: 10px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
