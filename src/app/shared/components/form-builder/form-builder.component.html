@@ -1,4 +1,4 @@
-<div class="form-builder">
+<!-- <div class="form-builder">
     <h2>Dynamic Form Builder</h2>
     
     <div>
@@ -51,5 +51,76 @@
   
       <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
     </form>
+  </div> -->
+
+
+
+
+<div class="form-builder">
+  <h2>Dynamic Form Builder</h2>
+
+  <div>
+    <button mat-raised-button (click)="addField('text')">Add Text Field</button>
+    <button mat-raised-button (click)="addField('textarea')">Add Textarea</button>
+    <button mat-raised-button (click)="addField('dropdown')">Add Dropdown</button>
+    <button mat-raised-button (click)="addField('checkbox')">Add Checkbox</button>
+    <button mat-raised-button (click)="addField('radio')">Add Radio Button</button>
   </div>
-  
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div formArrayName="fields">
+      <div *ngFor="let field of fields.controls; let i = index" [formGroupName]="i">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Label</mat-label>
+          <input matInput formControlName="label" placeholder="Enter label" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill"
+          *ngIf="field.get('type')?.value !== 'checkbox' && field.get('type')?.value !== 'radio'">
+          <mat-label>Placeholder</mat-label>
+          <input matInput formControlName="placeholder" placeholder="Enter placeholder" />
+        </mat-form-field>
+
+        <ng-container [ngSwitch]="field.get('type')?.value">
+          <mat-form-field appearance="fill" *ngSwitchCase="'text'">
+            <mat-label>{{ field.get('label')?.value }}</mat-label>
+            <input matInput [placeholder]="field.get('placeholder')?.value" formControlName="value" />
+            <mat-error *ngIf="field.get('value')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" *ngSwitchCase="'textarea'">
+            <mat-label>{{ field.get('label')?.value }}</mat-label>
+            <textarea matInput [placeholder]="field.get('placeholder')?.value" formControlName="value"></textarea>
+            <mat-error *ngIf="field.get('value')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" *ngSwitchCase="'dropdown'">
+            <mat-label>{{ field.get('label')?.value }}</mat-label>
+            <mat-select formControlName="value">
+              <mat-option *ngFor="let option of field.get('options')?.value" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox *ngSwitchCase="'checkbox'" formControlName="value">
+            {{ field.get('label')?.value }}
+          </mat-checkbox> 
+
+
+          <mat-radio-group *ngSwitchCase="'radio'" formControlName="value">
+            <mat-radio-button *ngFor="let option of field.get('options')?.value" [value]="option">{{ option
+              }}</mat-radio-button>
+          </mat-radio-group>
+        </ng-container>
+
+        <button mat-raised-button color="warn" (click)="removeField(i)">Remove Field</button>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+</div>
