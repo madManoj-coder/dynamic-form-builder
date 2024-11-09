@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormBuilderService } from '../../services/form-builder.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class FormBuilderComponent {
   form: FormGroup;
   fields: any[] = [];
 
-  constructor(private formFieldService: FormBuilderService) {
+  constructor(private formFieldService: FormBuilderService, private snackBar: MatSnackBar) {
     this.form = new FormGroup({});
   }
 
@@ -31,6 +32,9 @@ export class FormBuilderComponent {
     const controlName = this.fields[index].controlName;
     this.form.removeControl(controlName);
     this.fields.splice(index, 1);
+    this.snackBar.open('Field removed successfully !!!', 'Close', {
+      duration: 3000,
+    });
   }
 
   setCheckboxValue(controlName: string, value: string) {
@@ -41,6 +45,13 @@ export class FormBuilderComponent {
     if (this.form.valid) {
       console.log('Form Submitted:', this.form.value);
       this.form.reset();
+      this.snackBar.open('Form submitted successfully !!!', 'Close', {
+        duration: 3000,
+      });
+    } else {
+      this.snackBar.open('Please fill all required fields.', 'Close', {
+        duration: 3000,
+      });
     }
   }
 

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormBuilderService {
-
 
   getFieldConfig(type: string) {
     switch (type) {
