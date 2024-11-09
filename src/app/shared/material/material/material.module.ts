@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -23,7 +24,7 @@ import { MatNativeDateModule } from '@angular/material/core'
 
 let allmodules = [MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatTabsModule,
   MatCardModule,MatSortModule,MatTableModule, MatButtonModule,MatSnackBarModule, MatDialogModule, MatDatepickerModule, MatFormFieldModule,
-  MatInputModule,MatRadioModule, MatTooltipModule, MatSelectModule, MatNativeDateModule, MatPaginatorModule
+  MatInputModule,MatRadioModule,MatCheckboxModule, MatTooltipModule, MatSelectModule, MatNativeDateModule, MatPaginatorModule
 ]
 @NgModule({
   declarations: [],

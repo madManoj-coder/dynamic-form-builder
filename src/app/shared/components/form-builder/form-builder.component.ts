@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormBuilderService } from '../../services/form-builder.service';
-import { SnackBarService } from '../../services/snack-bar.service';
+
 
 @Component({
   selector: 'app-form-builder',
@@ -10,68 +10,38 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class FormBuilderComponent {
 
-  // form !: FormGroup;
-  // fieldTypes: string[] = ['text', 'textarea', 'dropdown', 'checkbox', 'radio'];
-
-  // constructor(
-  //   private fb: FormBuilder,
-  //   private snackBarService: SnackBarService,
-  //   private formbuilderService: FormBuilderService
-  // ) {
-  //   this.form = this.fb.group({
-  //     fields: this.fb.array([])
-  //   });
-  // }
-
-  // ngOnInit(): void { }
-
-  // get fields(): FormArray {
-  //   return this.form.get('fields') as FormArray;
-  // }
-
-  // addField(type: string): void {
-  //   const field = this.formbuilderService.createField(type);
-  //   this.fields.push(field);
-  // }
-
-  // removeField(index: number): void {
-  //   this.fields.removeAt(index);
-  //   this.snackBarService.showErrorMessage('field is removed successfully !!!')
-  // }
-
-  // onSubmit(): void {
-  //   if (this.form.valid) {
-  //     console.log(this.form.value);
-  //     this.snackBarService.showSuccessMessage('Form submitted successfully !!!')
-  //     // alert('Form submitted successfully!');
-  //   }
-  // }
-
-
   form: FormGroup;
+  fields: any[] = [];
 
-  constructor(private fb: FormBuilder, private formbuilderService: FormBuilderService) {
-    this.form = this.fb.group({
-      fields: this.fb.array([])
-    });
-  }
-
-  get fields(): FormArray {
-    return this.form.get('fields') as FormArray;
+  constructor(private formFieldService: FormBuilderService) {
+    this.form = new FormGroup({});
   }
 
   addField(type: string) {
-    const field = this.formbuilderService.createField(type);
-    this.fields.push(field);
+    const fieldConfig = this.formFieldService.getFieldConfig(type);
+    if (fieldConfig) {
+      const uniqueId = `${type}${this.fields.filter(f => f.type === type).length + 1}`;
+      const controlName = `control_${uniqueId}`;
+      this.fields.push({ ...fieldConfig, controlName, type });
+      this.form.addControl(controlName, fieldConfig.control);
+    }
   }
 
   removeField(index: number) {
-    this.fields.removeAt(index);
+    const controlName = this.fields[index].controlName;
+    this.form.removeControl(controlName);
+    this.fields.splice(index, 1);
+  }
+
+  setCheckboxValue(controlName: string, value: string) {
+    this.form.get(controlName)?.setValue(value);
   }
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      console.log('Form Submitted:', this.form.value);
+      this.form.reset();
     }
   }
+
 }

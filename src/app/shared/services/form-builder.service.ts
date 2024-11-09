@@ -6,80 +6,22 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
 })
 export class FormBuilderService {
 
-  // constructor(private fb: FormBuilder) { }
 
-  // createField(type: string): FormGroup {
-  //   switch(type) {
-  //     case 'text':
-  //       return this.fb.group({
-  //         type: ['text'],
-  //         label: ['Text Field', Validators.required],
-  //         placeholder: ['Enter text'],
-  //         value: ['', Validators.required]
-  //       });
-
-  //     case 'textarea':
-  //       return this.fb.group({
-  //         type: ['textarea'],
-  //         label: ['Textarea', Validators.required],
-  //         placeholder: ['Enter more text'],
-  //         value: ['', Validators.required]
-  //       });
-
-  //     case 'dropdown':
-  //       return this.fb.group({
-  //         type: ['dropdown'],
-  //         label: ['Dropdown'],
-  //         options: [['Manoj', 'Kapil', 'Nikhil']],
-  //         value: ['', Validators.required]
-  //       });
-
-  //     case 'checkbox':
-  //       return this.fb.group({
-  //         // type: ['checkbox'],
-  //         label: ['Checkbox'],
-  //         value: [false, Validators.required]
-  //       });
-
-  //     case 'radio':
-  //       return this.fb.group({
-  //         type: ['radio'],
-  //         label: ['Radio Button'],
-  //         options: [['Option 1', 'Option 2']],
-  //         value: ['', Validators.required]
-  //       });
-
-  //     default:
-  //       return this.fb.group({});
-  //   }
-  // }
-
-  constructor(private fb: FormBuilder) { }
-
-  createField(type: string): FormGroup {
-    return this.fb.group({
-      type: [type],
-      label: ['', Validators.required],
-      placeholder: [type === 'checkbox' ? ['', Validators.required] : null],
-      options: this.fb.array(this.getDefaultOptions(type) || []),
-      value: [type === 'checkbox' ? false : '', this.getValidationRules(type)],
-      validations: this.fb.group({
-        required: [false],
-      })
-    });
-
+  getFieldConfig(type: string) {
+    switch (type) {
+      case 'text':
+        return { control: new FormControl('', Validators.required), label: 'Text Field', placeholder: 'Enter text' };
+      case 'textarea':
+        return { control: new FormControl('', Validators.required), label: 'Textarea', placeholder: 'Enter description' };
+      case 'dropdown':
+        return { control: new FormControl('', Validators.required), label: 'Dropdown', options: ['Manoj', 'Shanty'], placeholder: 'Select option' };
+      case 'checkbox':
+        return { control: new FormControl('', Validators.required), label: 'Checkbox', options: ['Yes', 'No'] };
+      case 'radio':
+        return { control: new FormControl('', Validators.required), label: 'Radio Button', options: ['Right', 'Wrong'] };
+      default:
+        return null;
+    }
   }
 
-  private getDefaultOptions(type: string): string[] | null {
-    if (type === 'dropdown') return ['Manoj', 'Nikhil', 'Aryan'];
-    if (type === 'radio') return ['Yes', 'No'];
-    return null;
-  }
-
-  private getValidationRules(type: string): any {
-    return type === 'checkbox' ? false : '';
-  }
-
-  
-  
   }
