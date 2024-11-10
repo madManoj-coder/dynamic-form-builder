@@ -34,6 +34,7 @@ export class FormBuilderComponent {
     this.fields.splice(index, 1);
     this.snackBar.open('Field removed successfully !!!', 'Close', {
       duration: 3000,
+      panelClass: ['custom-snackbar']
     });
   }
 
@@ -42,17 +43,12 @@ export class FormBuilderComponent {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      console.log('Form Submitted:', this.form.value);
-      this.form.reset();
-      this.snackBar.open('Form submitted successfully !!!', 'Close', {
-        duration: 3000,
-      });
-    } else {
-      this.snackBar.open('Please fill all required fields.', 'Close', {
-        duration: 3000,
-      });
-    }
+    console.log('Form Submitted:', this.form.value);
+    this.form.reset();
+    this.snackBar.open('Form submitted successfully !!!', 'Close', {
+      duration: 3000,
+      panelClass: ['custom-snackbar']
+    });
   }
 
 }

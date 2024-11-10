@@ -15,7 +15,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
       <ng-container *ngFor="let field of fields; let i = index">
         <div class="form-field">
-          <mat-form-field class="w-75 mt-2"
+          <mat-form-field class="w-75 mt-2 .field-background"
             *ngIf="field.type === 'text' || field.type === 'textarea' || field.type === 'dropdown'" appearance="fill">
             <mat-label>{{ field.label }}</mat-label>
             <input matInput *ngIf="field.type === 'text'" [placeholder]="field.placeholder"
@@ -54,7 +54,7 @@
       <hr>
       <div class="text-right">
         <button mat-raised-button color="accent" type="submit"
-          [disabled]="!form.valid || fields.length === 0">Submit</button>
+          [disabled]="form.invalid || fields.length === 0">Submit</button>
       </div>
     </form>
   </div>
