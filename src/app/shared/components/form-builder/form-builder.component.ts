@@ -44,11 +44,11 @@ export class FormBuilderComponent {
 
   onSubmit() {
     console.log('Form Submitted:', this.form.value);
-    this.form.reset();
     this.snackBar.open('Form submitted successfully !!!', 'Close', {
       duration: 3000,
       panelClass: ['custom-snackbar']
     });
+    this.form.reset();
   }
 
 }

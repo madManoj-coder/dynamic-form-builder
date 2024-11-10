@@ -1,61 +1,53 @@
-
-
 <div class="button-group">
-  <button mat-raised-button color="primary"  (click)="addField('text')">Add Text Field</button>
+  <button mat-raised-button color="primary" (click)="addField('text')">Add Text Field</button>
   <button mat-raised-button color="primary" (click)="addField('textarea')">Add Textarea</button>
   <button mat-raised-button color="primary" (click)="addField('dropdown')">Add Dropdown</button>
-  <button mat-raised-button color="primary"  (click)="addField('checkbox')">Add Checkbox</button>
+  <button mat-raised-button color="primary" (click)="addField('checkbox')">Add Checkbox</button>
   <button mat-raised-button color="primary" (click)="addField('radio')">Add Radio Button</button>
 </div>
-<div class="card my-4">
-  <div class="card-header text-center">
-    <h1><strong>Dynamic form</strong></h1>
-  </div>
-  <div class="card-body">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
-      <ng-container *ngFor="let field of fields; let i = index">
-        <div class="form-field">
-          <mat-form-field class="w-75 mt-2 .field-background"
-            *ngIf="field.type === 'text' || field.type === 'textarea' || field.type === 'dropdown'" appearance="fill">
-            <mat-label>{{ field.label }}</mat-label>
-            <input matInput *ngIf="field.type === 'text'" [placeholder]="field.placeholder"
-              [formControlName]="field.controlName">
-            <textarea matInput *ngIf="field.type === 'textarea'" [placeholder]="field.placeholder"
-              [formControlName]="field.controlName"></textarea>
-            <mat-select *ngIf="field.type === 'dropdown'" [placeholder]="field.placeholder"
-              [formControlName]="field.controlName">
-              <mat-option *ngFor="let option of field.options" [value]="option">{{ option }}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.get(field.controlName)?.hasError('required')">
-              <strong>{{ field.label }} is required</strong>
-            </mat-error>
-          </mat-form-field>
+<h1 class="text-center"><strong>Dynamic form</strong></h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  <ng-container *ngFor="let field of fields; let i = index">
+    <div class="form-field">
+      <mat-form-field class="w-75 mt-2"
+        *ngIf="field.type === 'text' || field.type === 'textarea' || field.type === 'dropdown'" appearance="fill">
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput *ngIf="field.type === 'text'" [placeholder]="field.placeholder"
+          [formControlName]="field.controlName">
+        <textarea matInput *ngIf="field.type === 'textarea'" [placeholder]="field.placeholder"
+          [formControlName]="field.controlName"></textarea>
+        <mat-select *ngIf="field.type === 'dropdown'" [placeholder]="field.placeholder"
+          [formControlName]="field.controlName">
+          <mat-option *ngFor="let option of field.options" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get(field.controlName)?.hasError('required')">
+          <strong>{{ field.label }} is required</strong>
+        </mat-error>
+      </mat-form-field>
 
-          <div *ngIf="field.type === 'checkbox'">
-            <label><strong>{{ field.label }}</strong></label>
-            <section class="example-section" *ngFor="let option of field.options">
-              <mat-checkbox class="example-margin" [checked]="form.get(field.controlName)?.value === option"
-                (change)="setCheckboxValue(field.controlName, option)">
-                {{ option }}
-              </mat-checkbox>
-            </section>
-          </div>
-
-          <mat-radio-group *ngIf="field.type === 'radio'" [formControlName]="field.controlName">
-            <mat-label><strong>{{ field.label }}</strong></mat-label>
-            <mat-radio-button *ngFor="let option of field.options" [value]="option">{{ option }}</mat-radio-button>
-          </mat-radio-group>
-
-          <button mat-raised-button color="warn" (click)="removeField(i)">
-             Remove
-          </button>
-        </div>
-      </ng-container>
-      <hr>
-      <div class="text-right">
-        <button mat-raised-button color="accent" type="submit"
-          [disabled]="form.invalid || fields.length === 0">Submit</button>
+      <div *ngIf="field.type === 'checkbox'">
+        <label><strong>{{ field.label }}</strong></label>
+        <section class="example-section" *ngFor="let option of field.options">
+          <mat-checkbox class="example-margin" [checked]="form.get(field.controlName)?.value === option"
+            (change)="setCheckboxValue(field.controlName, option)">
+            {{ option }}
+          </mat-checkbox>
+        </section>
       </div>
-    </form>
+
+      <mat-radio-group *ngIf="field.type === 'radio'" [formControlName]="field.controlName">
+        <mat-label><strong>{{ field.label }}</strong></mat-label>
+        <mat-radio-button *ngFor="let option of field.options" [value]="option">{{ option }}</mat-radio-button>
+      </mat-radio-group>
+
+      <button mat-raised-button color="warn" (click)="removeField(i)">
+        Remove
+      </button>
+    </div>
+  </ng-container>
+  <hr>
+  <div class="text-right">
+    <button mat-raised-button color="accent" type="submit"
+      [disabled]="form.invalid || fields.length === 0">Submit</button>
   </div>
-</div>
+</form>
