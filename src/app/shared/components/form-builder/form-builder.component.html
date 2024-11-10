@@ -6,7 +6,7 @@
   <button mat-raised-button color="primary" (click)="addField('radio')">Add Radio Button</button>
 </div>
 <h1 class="text-center"><strong>Dynamic form</strong></h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="example-form">
   <ng-container *ngFor="let field of fields; let i = index">
     <div class="form-field">
       <mat-form-field class="w-75 mt-2"
