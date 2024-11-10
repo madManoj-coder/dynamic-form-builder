@@ -6,7 +6,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class FormBuilderService {
 
-  getFieldConfig(type: string) {
+  getField(type: string) {
     switch (type) {
       case 'text':
         return { control: new FormControl('', Validators.required), label: 'Text Field', placeholder: 'Enter text' };

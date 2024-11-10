@@ -19,7 +19,7 @@ export class FormBuilderComponent {
   }
 
   addField(type: string) {
-    const fieldConfig = this.formFieldService.getFieldConfig(type);
+    const fieldConfig = this.formFieldService.getField(type);
     if (fieldConfig) {
       const uniqueId = `${type}${this.fields.filter(f => f.type === type).length + 1}`;
       const controlName = `control_${uniqueId}`;
